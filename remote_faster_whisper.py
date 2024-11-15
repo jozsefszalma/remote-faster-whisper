@@ -64,6 +64,9 @@ class FasterWhisperApi:
         self.beam_size = faster_whisper_config.get("beam_size", 5)
         self.translate = faster_whisper_config.get("translate", False)
         self.language = faster_whisper_config.get("language", None)
+        self.repetition_penalty = faster_whisper_config.get("repetition_penalty", 1)
+        self.no_speech_threshold = faster_whisper_config.get("no_speech_threshold", 0.6)
+        self.hallucination_silence_threshold = faster_whisper_config.get("hallucination_silence_threshold", None)
         if not self.language:
             self.language = None
 
@@ -139,6 +142,9 @@ class FasterWhisperApi:
             beam_size=self.beam_size,
             language=self.language,
             task="translate" if self.translate else "transcribe",
+            repetition_penalty = self.repetition_penalty,
+            no_speech_threshold = self.no_speech_threshold,
+            hallucination_silence_threshold = self.hallucination_silence_threshold
         )
 
         found_text = list()
